@@ -24,10 +24,10 @@ public class DependencyInjectionEngine {
 //        Class implementationToInitialize = DependencySupplier.getImplementation(parentInstance.getClass());
 
         // If the class is already instantiated as a singleton
-        if(getInstantiatedSingletons().contains(parentInstance)){
-            System.out.println("This class is already instantiated as a singleton!");
-            return;
-        }
+//        if(getInstantiatedSingletons().contains(parentInstance)){
+//            System.out.println("This class is already instantiated as a singleton!");
+//            return;
+//        }
 
         // Instantiate all the autowired fields in the class
         instantiateFields(parentInstance);
@@ -45,24 +45,28 @@ public class DependencyInjectionEngine {
                         System.out.println(field.getName());
 
                         try {
-                            Class classField = Class.forName(field.getType().toString());
-                            Constructor<?> constructor = classField.getConstructor();
-                            Object object = constructor.newInstance();
 
-                            addToListIfSingleton(object);
+                            if(!isInSingletonList(field.getType())) {
 
-                            field.setAccessible(true);
-                            field.set(parentInstance, object);
+                                Class classField = DependencySupplier.getImplementation(field.getType());
+                                Constructor<?> constructor = classField.getConstructor();
+                                Object object = constructor.newInstance();
 
-                            if(autowireAnnotation.verbose()){
-                                System.out.println("Initialized" + field.getType() + " " +  field.getName() +
-                                        " in " + field.getDeclaringClass() +  " on " + LocalDateTime.now() +
-                                        " with <param.instance.hashCode");
+                                addToListIfSingleton(object);
+
+                                field.setAccessible(true);
+                                field.set(parentInstance, object);
+
+                                if (autowireAnnotation.verbose()) {
+                                    System.out.println("Initialized" + field.getType() + " " + field.getName() +
+                                            " in " + field.getDeclaringClass() + " on " + LocalDateTime.now() +
+                                            " with " + object.hashCode());
+                                }
                             }
 
                             instantiateAllMembers(object);
 
-                        } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+                        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
                             System.out.println("Could not instantiate a type");
                             e.printStackTrace();
                         }
@@ -72,6 +76,15 @@ public class DependencyInjectionEngine {
         );
 
 
+
+    }
+
+    private boolean isInSingletonList(Class type){
+        getInstantiatedSingletons().forEach(singleton->{
+            if(singleton.getClass().equals(type)){
+                return true;
+            }
+        });
 
     }
 

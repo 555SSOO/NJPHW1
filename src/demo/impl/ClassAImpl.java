@@ -10,8 +10,10 @@ import java.lang.reflect.Field;
 @Bean(scope= Scope.SINGLETON)
 public class ClassAImpl implements ClassA {
 
-    @Autowire()
+    @Autowire(verbose = true)
     int att = 1;
+
+    public ClassAImpl(){}
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void asd(String[] args) {
