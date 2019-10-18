@@ -2,17 +2,19 @@ package demo.impl;
 
 import annotations.Autowire;
 import annotations.Bean;
+import constants.Scope;
+import demo.ClassX;
 
 import java.lang.reflect.Field;
 
-@Bean()
-public class DemoImpl {
+@Bean(scope= Scope.SINGLETON)
+public class ClassXImpl implements ClassX {
 
     @Autowire()
     int att = 1;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static void main(String[] args) {
+    public void asd(String[] args) {
         try {
 
         	// Dva nacina dolazenja do "meta podataka" neke klase u vidu instace klase Class
@@ -21,8 +23,8 @@ public class DemoImpl {
 
             Bean ci = (Bean) cl.getAnnotation(Bean.class);
             System.out.println("Anotacija ove klase: " + ci);
-            System.out.println("Autor: " + ci.author());
-            System.out.println("Verzija: " + ci.version());
+//            System.out.println("Autor: " + ci.author());
+//            System.out.println("Verzija: " + ci.version());
 
 //            Method m = cl.getDeclaredMethod("f");
 //            Component mi = m.getAnnotation(Component.class);
@@ -33,7 +35,7 @@ public class DemoImpl {
             Field fl = cl.getDeclaredField("att");
             Autowire ai = fl.getAnnotation(Autowire.class);
             System.out.println("Anotacija atributa att: " + ai);
-            System.out.println("value: " + ai.value());
+//            System.out.println("value: " + ai.value());
 
         } catch (Exception ex) {
             ex.printStackTrace();
