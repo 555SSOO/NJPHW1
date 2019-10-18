@@ -3,12 +3,12 @@ package demo.impl;
 import annotations.Autowire;
 import annotations.Bean;
 import constants.Scope;
-import demo.ClassX;
+import demo.ClassA;
 
 import java.lang.reflect.Field;
 
 @Bean(scope= Scope.SINGLETON)
-public class ClassXImpl implements ClassX {
+public class ClassAImpl implements ClassA {
 
     @Autowire()
     int att = 1;

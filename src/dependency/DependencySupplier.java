@@ -1,19 +1,19 @@
 package dependency;
 
-import demo.ClassX;
-import demo.impl.ClassXImpl;
+import demo.ClassA;
+import demo.impl.ClassAImpl;
 
 import java.util.Map;
 import java.util.Objects;
 
 import static java.util.Map.entry;
 
-public class DependencySupplier {
+class DependencySupplier {
 
 
     // We put our mapping in this map by adding entries
     private static Map<Class, Class> implementationMapping = Map.ofEntries(
-            entry(ClassX.class, ClassXImpl.class)
+            entry(ClassA.class, ClassAImpl.class)
     );
 
     // Get the implementation class from the interface class by looking it up in the map

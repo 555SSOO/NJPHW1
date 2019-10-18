@@ -1,13 +1,20 @@
 import annotations.Autowire;
-import demo.ClassX;
-import demo.impl.ClassYImpl;
+import annotations.Bean;
+import constants.Scope;
+import demo.ClassA;
+import demo.impl.ClassBImpl;
 
+
+// This is the class from which we will start the instancing
+@Bean(scope= Scope.SINGLETON)
 public class RootInstance {
 
+    // This is an interface that is mapped to a singleton class
     @Autowire()
-    ClassX classX;
+    ClassA ClassA;
 
+    // This is an implementation that is a prototype
     @Autowire()
-    ClassYImpl classYImpl;
+    ClassBImpl ClassBImpl;
 
 }
