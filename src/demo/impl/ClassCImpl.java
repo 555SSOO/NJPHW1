@@ -1,10 +1,9 @@
 package demo.impl;
 
 import annotations.Autowire;
-import annotations.Bean;
-import constants.Scope;
+import annotations.Service;
 
-@Bean(scope= Scope.SINGLETON)
+@Service
 public class ClassCImpl {
 
     @Autowire(verbose = true)

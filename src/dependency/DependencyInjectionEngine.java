@@ -2,6 +2,7 @@ package dependency;
 
 import annotations.Autowire;
 import annotations.Bean;
+import annotations.Service;
 import constants.Scope;
 
 import java.lang.reflect.Constructor;
@@ -96,7 +97,10 @@ public class DependencyInjectionEngine {
     private void addToListIfSingleton(Object instance) {
         // If the class is annotated as a singleton, put it in the list
         Bean beanAnnotation = instance.getClass().getAnnotation(Bean.class);
-        if (Objects.nonNull(beanAnnotation) && beanAnnotation.scope().equals(Scope.SINGLETON)) {
+
+        // TODO better solution for this?
+        Service serviceAnnotation = instance.getClass().getAnnotation(Service.class);
+        if ((Objects.nonNull(beanAnnotation) && beanAnnotation.scope().equals(Scope.SINGLETON)) || Objects.nonNull(serviceAnnotation)) {
             getInstantiatedSingletons().add(instance);
         }
     }
